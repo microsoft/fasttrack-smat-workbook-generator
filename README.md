@@ -33,9 +33,11 @@ The -s argument takes the path to the root of the SMAT output. This is the folde
 |-t|Template Name|FastTrack|
 |-tp|Path to template|none|
 
-## Custom Template
+## Templates
 
-Some templates are built into the solution, currently these are FastTrack and Simple. The FastTrack template is the default and contains FastTrack formatting and branding. You can optionally switch to the simple template using the `-t Simple` argument. If you would like to create and use your own template you can download either of the existing templates and modify them as needed. Once your template is ready you can use the `-tp "c:\path\tomy\temlate"` argument to use it in the import.
+The workbook is generated and written into a template file, which is a macro-enabled Microsoft Excel template. Two templates are built into the solution: "FastTrack" and "Simple". The FastTrack template is the default and contains FastTrack formatting and branding. You can switch to the simple template using the `-t Simple` argument.
+
+If you would like to create and use your own template you can download either of the existing templates and modify them as needed. Your custom template MUST 1) be an .xltm file and 2) have an empty tab named "Summary". You can add any other tabs, formatting, or code behind to your template. Note that if a tab already exists whose name collides with the name of a generated tab an error will be written to the log. Once your template is ready you can use the `-tp "c:\path\to\my\temlate.xltm"` argument to use it in the import.
 
 
 ## Issues
