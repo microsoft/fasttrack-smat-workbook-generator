@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "smat-workbook-generator", "smat-workbook-generator\smat-workbook-generator.csproj", "{AC0737C5-09DA-4884-AC50-9E33873E0CFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.FastTrack.SMATWorkbookGenerator", "Microsoft.SharePoint.Migration.Scan.WorkbookWriter\Microsoft.FastTrack.SMATWorkbookGenerator.csproj", "{A9AAD5EE-2988-431D-B4F0-9CFAC3D51107}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC0737C5-09DA-4884-AC50-9E33873E0CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC0737C5-09DA-4884-AC50-9E33873E0CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC0737C5-09DA-4884-AC50-9E33873E0CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC0737C5-09DA-4884-AC50-9E33873E0CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9AAD5EE-2988-431D-B4F0-9CFAC3D51107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9AAD5EE-2988-431D-B4F0-9CFAC3D51107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9AAD5EE-2988-431D-B4F0-9CFAC3D51107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9AAD5EE-2988-431D-B4F0-9CFAC3D51107}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FBA99E25-2C83-486F-BE0D-A38F35EDA253}
+	EndGlobalSection
+EndGlobal
