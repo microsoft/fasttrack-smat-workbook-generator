@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Microsoft.FastTrack.SMATWorkbookGenerator.Extensions
 {
+    /// <summary>
+    /// Extension methods for working with <see cref="Sheets"/>
+    /// </summary>
     public static class SheetsExt
     {
         /// <summary>

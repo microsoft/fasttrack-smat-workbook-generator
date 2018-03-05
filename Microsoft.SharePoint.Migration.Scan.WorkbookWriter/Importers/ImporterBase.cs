@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
 {
+    /// <summary>
+    /// Base class for importers containing common functionality
+    /// </summary>
     abstract class ImporterBase : IDisposable
     {
         private static readonly string TraceCategory = "ImporterBase";
@@ -18,8 +21,8 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
         /// <param name="targetWorkbookPath">Target workbook instance</param>
         public ImporterBase(SpreadsheetDocument targetWorkbook)
         {
-            this.TargetWorkbook = targetWorkbook;
-            this._sharedStringPart = null;
+            TargetWorkbook = targetWorkbook;
+            _sharedStringPart = null;
         }
 
         #region properties
@@ -30,26 +33,26 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
         {
             get
             {
-                if (this._sharedStringPart == null)
+                if (_sharedStringPart == null)
                 {
                     // Get the SharedStringTablePart. If it does not exist, create a new one.
-                    if (this.TargetWorkbook.WorkbookPart.GetPartsOfType<SharedStringTablePart>().Count() > 0)
+                    if (TargetWorkbook.WorkbookPart.GetPartsOfType<SharedStringTablePart>().Count() > 0)
                     {
-                        this._sharedStringPart = this.TargetWorkbook.WorkbookPart.GetPartsOfType<SharedStringTablePart>().First();
+                        _sharedStringPart = TargetWorkbook.WorkbookPart.GetPartsOfType<SharedStringTablePart>().First();
                     }
                     else
                     {
-                        this._sharedStringPart = this.TargetWorkbook.WorkbookPart.AddNewPart<SharedStringTablePart>();
+                        _sharedStringPart = TargetWorkbook.WorkbookPart.AddNewPart<SharedStringTablePart>();
                     }
 
                     // If the part does not contain a SharedStringTable, create one.
-                    if (this._sharedStringPart.SharedStringTable == null)
+                    if (_sharedStringPart.SharedStringTable == null)
                     {
-                        this._sharedStringPart.SharedStringTable = new SharedStringTable();
+                        _sharedStringPart.SharedStringTable = new SharedStringTable();
                     }
                 }
 
-                return this._sharedStringPart.SharedStringTable;
+                return _sharedStringPart.SharedStringTable;
             }
         }
 
@@ -75,7 +78,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
             Sheet sheet = null;
             try
             {
-                sheet = this.TargetWorkbook.WorkbookPart.Workbook.GetFirstChild<Sheets>().Elements<Sheet>().First(s => s.Name.Value.Equals(sheetName, StringComparison.OrdinalIgnoreCase));
+                sheet = TargetWorkbook.WorkbookPart.Workbook.GetFirstChild<Sheets>().Elements<Sheet>().First(s => s.Name.Value.Equals(sheetName, StringComparison.OrdinalIgnoreCase));
             }
             catch (Exception err)
             {
@@ -172,7 +175,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
         {
             int i = 0;
 
-            foreach (SharedStringItem item in this.StringTable.Elements<SharedStringItem>())
+            foreach (SharedStringItem item in StringTable.Elements<SharedStringItem>())
             {
                 if (item.InnerText == text)
                 {
@@ -182,7 +185,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
                 i++;
             }
 
-            this.StringTable.AppendChild(new SharedStringItem(new Text(text)));
+            StringTable.AppendChild(new SharedStringItem(new Text(text)));
 
             return i;
         }
@@ -203,7 +206,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
 
             if (fieldType == CellValues.SharedString)
             {
-                var sharedStringIndex = this.InsertSharedStringItem(rawSourceValue);
+                var sharedStringIndex = InsertSharedStringItem(rawSourceValue);
                 cell.CellValue = new CellValue(sharedStringIndex.ToString());
             }
             else
@@ -259,9 +262,9 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
         /// </summary>
         public void Dispose()
         {
-            if (this.TargetWorkbook != null)
+            if (TargetWorkbook != null)
             {
-                this.TargetWorkbook.Save();
+                TargetWorkbook.Save();
             }
         }
 

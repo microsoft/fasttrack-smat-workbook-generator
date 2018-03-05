@@ -4,6 +4,9 @@ using System;
 
 namespace Microsoft.FastTrack.SMATWorkbookGenerator.Extensions
 {
+    /// <summary>
+    /// Extension methods for working with <see cref="OpenXmlWriter"/>
+    /// </summary>
     public static class OpenXmlWriterExt
     {
         /// <summary>
@@ -81,12 +84,12 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Extensions
         /// <param name="writer"></param>
         public RowEnder(OpenXmlWriter writer)
         {
-            this._writer = writer;
+            _writer = writer;
         }
 
         public void Dispose()
         {
-            this._writer.WriteEndElement();
+            _writer.WriteEndElement();
         }
     }
 }

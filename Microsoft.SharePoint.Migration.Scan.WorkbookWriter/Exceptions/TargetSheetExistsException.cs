@@ -2,6 +2,9 @@
 
 namespace Microsoft.FastTrack.SMATWorkbookGenerator.Exceptions
 {
+    /// <summary>
+    /// Indicates the sheet we want to create already exists in the template
+    /// </summary>
     class TargetSheetExistsException : Exception
     {
         public TargetSheetExistsException(string sheetName) :

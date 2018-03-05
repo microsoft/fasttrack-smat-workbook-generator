@@ -35,8 +35,8 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
         /// <param name="progressCallback">A callback used to report progress within this importer</param>
         public SheetImporter(SpreadsheetDocument targetWorkbook, ProcessingRecord fileInfo, Action<ISMATGeneratorProgressInfo> progressCallback) : base(targetWorkbook)
         {
-            this.FileInfo = fileInfo;
-            this._progressCallback = progressCallback;
+            FileInfo = fileInfo;
+            _progressCallback = progressCallback;
         }
 
         /// <summary>
@@ -50,21 +50,21 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
         public override void Import()
         {
             Trace.Indent();
-            Trace.WriteLine(string.Format("Importing file {0}", this.FileInfo.AbsolutePath), TraceCategory);
+            Trace.WriteLine(string.Format("Importing file {0}", FileInfo.AbsolutePath), TraceCategory);
 
-            if (!File.Exists(this.FileInfo.AbsolutePath))
+            if (!File.Exists(FileInfo.AbsolutePath))
             {
-                Trace.TraceWarning("Importing file {0}", this.FileInfo.AbsolutePath);
+                Trace.TraceWarning("Importing file {0}", FileInfo.AbsolutePath);
                 return;
             }
 
-            var csvSourcePath = File.OpenRead(this.FileInfo.AbsolutePath);
+            var csvSourcePath = File.OpenRead(FileInfo.AbsolutePath);
 
             // get the existing sheets collection
-            var sheets = this.TargetWorkbook.WorkbookPart.Workbook.GetFirstChild<Sheets>();
+            var sheets = TargetWorkbook.WorkbookPart.Workbook.GetFirstChild<Sheets>();
 
             // used as the name for the sheet and import tracking display
-            var sheetName = this.GetSheetName(sheets);
+            var sheetName = GetSheetName(sheets);
 
             // we need to check to see if a sheet with this name already exists
             if (sheets.Cast<Sheet>().Where(s => s.Name.Value.Equals(sheetName, StringComparison.OrdinalIgnoreCase)).Any())
@@ -72,19 +72,19 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
                 throw new TargetSheetExistsException(sheetName);
             }
 
-            var totalLineCount = File.ReadAllLines(this.FileInfo.AbsolutePath).LongCount();
+            var totalLineCount = File.ReadAllLines(FileInfo.AbsolutePath).LongCount();
             _progressCallback(new SMATGeneratorProgressInfo()
             {
                 CurrentFileMax = totalLineCount,
-                CurrentFileName = this.FileInfo.Filename,
+                CurrentFileName = FileInfo.Filename,
                 CurrentFilePosition = 0,
                 TotalFilesMax = 0,
                 TotalFilesPosition = 0,
             });
 
             // create the new worksheet
-            var worksheetPart = this.TargetWorkbook.WorkbookPart.AddNewPart<WorksheetPart>();
-            var sheet = new Sheet() { Id = this.TargetWorkbook.WorkbookPart.GetIdOfPart(worksheetPart), SheetId = sheets.NextAvailableSheetId(), Name = sheetName };
+            var worksheetPart = TargetWorkbook.WorkbookPart.AddNewPart<WorksheetPart>();
+            var sheet = new Sheet() { Id = TargetWorkbook.WorkbookPart.GetIdOfPart(worksheetPart), SheetId = sheets.NextAvailableSheetId(), Name = sheetName };
             sheets.Append(sheet);
 
             using (var csvReader = new TextFieldParser(csvSourcePath))
@@ -122,7 +122,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
                                     for (var i = 0; i < fields.Length; i++)
                                     {
                                         // the +3 here is derived from a need to +1 for the 1 based columns and +2 as we skip the first two columns by design
-                                        cellAddress = this.GetCellAddress((uint)(i + 3), currentTargetRowPointer);
+                                        cellAddress = GetCellAddress((uint)(i + 3), currentTargetRowPointer);
                                         writer.WriteCell(cellAddress, fields[i], CellValues.InlineString);
                                     }
                                 }
@@ -135,7 +135,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
                                     // we need to use the first row of data to determine as best we can the column types
                                     for (var i = 0; i < fields.Length; i++)
                                     {
-                                        typeEnumMapping.Add(this.GetCellDataType(fields[i]));
+                                        typeEnumMapping.Add(GetCellDataType(fields[i]));
                                     }
                                 }
 
@@ -144,7 +144,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
                                     for (var i = 0; i < fields.Length; i++)
                                     {
                                         // the +3 here is derived from a need to +1 for the 1 based columns and +2 as we skip the first two columns by design
-                                        cellAddress = this.GetCellAddress((uint)(i + 3), currentTargetRowPointer);
+                                        cellAddress = GetCellAddress((uint)(i + 3), currentTargetRowPointer);
                                         writer.WriteCell(cellAddress, fields[i], typeEnumMapping[i]);
                                     }
                                 }
@@ -165,7 +165,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
                             _progressCallback(new SMATGeneratorProgressInfo()
                             {
                                 CurrentFileMax = totalLineCount,
-                                CurrentFileName = this.FileInfo.Filename,
+                                CurrentFileName = FileInfo.Filename,
                                 CurrentFilePosition = currentTargetRowPointer,
                                 TotalFilesMax = 0,
                                 TotalFilesPosition = 0,
@@ -182,7 +182,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
             _progressCallback(new SMATGeneratorProgressInfo()
             {
                 CurrentFileMax = totalLineCount,
-                CurrentFileName = this.FileInfo.Filename,
+                CurrentFileName = FileInfo.Filename,
                 CurrentFilePosition = totalLineCount,
                 TotalFilesMax = 0,
                 TotalFilesPosition = 0,
@@ -236,7 +236,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
             // if we trim our filenames to 30 chars we end up with names that are identical for sheets, which is dissallowed
 
             // replace the long prefix string if present and get a name of the right length
-            var protoName = Regex.Replace(Path.GetFileNameWithoutExtension(this.FileInfo.AbsolutePath), "^FullTrustSolution_", "FTS_");
+            var protoName = Regex.Replace(Path.GetFileNameWithoutExtension(FileInfo.AbsolutePath), "^FullTrustSolution_", "FTS_");
             protoName = Regex.Replace(protoName, "-detail$", "");
             var sheetName = sheets.MakeSafeSheetName(protoName);
 

@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("smat-workbook-generator")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("https://github.com/Microsoft/fasttrack-smat-workbook-generator")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Microsoft FastTrack")]
 [assembly: AssemblyProduct("smat-workbook-generator")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]

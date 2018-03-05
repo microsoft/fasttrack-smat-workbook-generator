@@ -2,11 +2,11 @@
 
 ## SMAT Workbook Generator
 
-The SMAT workbook generator is a tool that takes the output from [Microsoft SMAT](https://www.microsoft.com/en-us/download/details.aspx?id=53598) and tranforms it into a single wookbook file. Originally this was done as part of our engagements with customers within the FastTrack program, but we are releasing here as OSS as other might find it useful.
+The SMAT workbook generator is a tool that takes the output from [Microsoft SMAT](https://www.microsoft.com/en-us/download/details.aspx?id=53598) and tranforms it into a single wookbook. Originally this was done as part of our engagements with customers within the FastTrack program, but we are releasing it here as OSS as other might find it useful.
 
 ## Usage
 
-Please find the [latest release](https://github.com/Microsoft/fasttrack-smat-workbook-generator/releases) and download and unzip the file. It contains the smatwb.exe as well as supporting files and DLLS. You may need to "unblock" the files after downloading depending on your system settings.
+Please find the [latest release](https://github.com/Microsoft/fasttrack-smat-workbook-generator/releases), download, and unzip the file. It contains the smatwb.exe as well as supporting files and DLLS. You may need to "unblock" the files after downloading depending on your system settings.
 
 This tool runs on the command line and takes several parameters as described below.
 
@@ -35,14 +35,13 @@ The -s argument takes the path to the root of the SMAT output. This is the folde
 
 ## Templates
 
-The workbook is generated and written into a template file, which is a macro-enabled Microsoft Excel template. Two templates are built into the solution: "FastTrack" and "Simple". The FastTrack template is the default and contains FastTrack formatting and branding. You can switch to the simple template using the `-t Simple` argument.
+The workbook is generated and written based on a template, which is a macro-enabled Microsoft Excel template (.xltm). Two templates are built into the solution: "FastTrack" and "Simple". The FastTrack template is the default and contains FastTrack formatting and branding. You can switch to the simple template using the `-t Simple` argument.
 
-If you would like to create and use your own template you can download either of the existing templates and modify them as needed. Your custom template MUST 1) be an .xltm file and 2) have an empty tab named "Summary". You can add any other tabs, formatting, or code behind to your template. Note that if a tab already exists whose name collides with the name of a generated tab an error will be written to the log. Once your template is ready you can use the `-tp "c:\path\to\my\temlate.xltm"` argument to use it in the import.
-
+If you would like to create and use your own template(s) you can download either of the existing templates and modify them as needed. Your custom template MUST 1) be an .xltm file and 2) have an empty tab named "Summary". You can add any other tabs, formatting, or code behind to your template. Note that if a tab already exists whose name collides with the name of a generated tab an error will be written to the log. Once your template is ready you can use the `-tp "c:\path\to\my\temlate.xltm"` argument to use it in the import.
 
 ## Issues
 
-If you find issues or have suggestions for enhancements please [submit an issue](https://github.com/Microsoft/fasttrack-smat-workbook-generator/issues) so we can respond and track it. Be sure to include enough information so we can understand what's happening and respond - but also remember that the issues list is public so please don't include any PII or farm specific information when reporting an issue.
+If you find issues or have suggestions for enhancements please [submit an issue](https://github.com/Microsoft/fasttrack-smat-workbook-generator/issues) so we can respond and track it. Be sure to include enough information so we can understand what's happening - but also remember that the issues list is public so please don't include any PII or farm specific information when reporting an issue.
 
 
 ## Contributing

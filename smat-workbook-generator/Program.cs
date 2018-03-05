@@ -10,11 +10,12 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator
     /// </summary>
     class Program
     {
-        // used to store the positions
+        // used to store the positions for console display
         private static int overallTop = -1;
         private static int overallLeft = -1;
         private static int fileTop = -1;
         private static int fileLeft = -1;
+        private static string _mask = null;
 
         /// <summary>
         /// Main entry point
@@ -56,6 +57,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator
                 // create our generator from the supplied settings
                 using (var generator = new SMATWorkbookGenerator(settings))
                 {
+                    // grab our computed output path and run the generator
                     outputPath = generator.OutputPath;
                     generator.Run();
                 }
@@ -91,7 +93,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator
                 return false;
             }
 
-            // ensure the template file specified exists
+            // ensure the summary file exists in the input folder path
             var summaryFilePath = Path.Combine(arguments.SMATFolderPath, Constants.FinalSummaryReportCsv);
             if (!File.Exists(summaryFilePath))
             {
@@ -99,7 +101,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator
                 return false;
             }
 
-            // ensure the template file specified exists
+            // ensure the template file specified exists if one was specified
             if (!string.IsNullOrEmpty(arguments.TemplateFilePath) && !File.Exists(arguments.TemplateFilePath))
             {
                 Console.WriteLine(Strings.TemplateFileDoesNotExist, arguments.TemplateFilePath);
@@ -113,6 +115,10 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator
 
         #region ProgressReporter
 
+        /// <summary>
+        /// Reports progress to the screen based on the supplied info object
+        /// </summary>
+        /// <param name="info">Contains details on progress from the <see cref="SMATWorkbookGenerator"/></param>
         public static void ProgressReporter(ISMATGeneratorProgressInfo info)
         {
             int left = Console.CursorLeft;
@@ -142,8 +148,9 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator
             }
         }
 
-        private static string _mask = null;
-
+        /// <summary>
+        /// A mask used to blank out lines as needed to keep the output clean and consistent
+        /// </summary>
         private static string Mask
         {
             get

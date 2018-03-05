@@ -29,7 +29,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator
             Settings = settings;
 
             // define a callback here to avoid lots of if tests later
-            ProgressCallback = settings.ProgressCallback == null ? (ISMATGeneratorProgressInfo msg) => { } : settings.ProgressCallback;
+            ProgressCallback = settings.ProgressCallback ?? ((ISMATGeneratorProgressInfo msg) => { });
         }
 
         #region properties
@@ -281,7 +281,8 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator
         /// <returns>Relative string path</returns>
         private string GetOutputPath()
         {
-            var outputRoot = Path.Combine(Settings.OutputFolderPath, Constants.WorkbookOutputFolder);
+            // use our default of ./workbook or the path that they gave us
+            var outputRoot = string.IsNullOrEmpty(Settings.OutputFolderPath) ? Constants.WorkbookOutputFolder : Settings.OutputFolderPath;
 
             // ensure we have our workbook output directory
             Directory.CreateDirectory(outputRoot);

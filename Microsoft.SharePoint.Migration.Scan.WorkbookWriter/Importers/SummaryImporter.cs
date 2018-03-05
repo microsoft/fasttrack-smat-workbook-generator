@@ -16,7 +16,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
 
         public SummaryImporter(SpreadsheetDocument targetWorkbook, string summaryFilePath) : base(targetWorkbook)
         {
-            this.SummaryFilePath = summaryFilePath;
+            SummaryFilePath = summaryFilePath;
         }
 
         private string SummaryFilePath { get; set; }
@@ -28,17 +28,17 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
             Trace.Indent();
 
             // get target sheet and associated OpenXML parts
-            var sheet = this.GetSheet(SummaryImporter.SummaryWorksheetName);
-            var sheetPart = (WorksheetPart)this.TargetWorkbook.WorkbookPart.GetPartById(sheet.Id.Value);
+            var sheet = GetSheet(SummaryImporter.SummaryWorksheetName);
+            var sheetPart = (WorksheetPart)TargetWorkbook.WorkbookPart.GetPartById(sheet.Id.Value);
             var sheetData = sheetPart.Worksheet.GetFirstChild<SheetData>();
 
             // start on the first row of the new worksheet
             uint currentTargetRowPointer = 1;
 
-            Trace.WriteLine(string.Format("Importing summary file {0}.", this.SummaryFilePath), TraceCategory);
+            Trace.WriteLine(string.Format("Importing summary file {0}.", SummaryFilePath), TraceCategory);
 
             // open csv, if it doesn't exist let the code in ImportManager catch and log that exception as it is fatal to this FileImporter
-            using (var csvReader = new TextFieldParser(this.SummaryFilePath))
+            using (var csvReader = new TextFieldParser(SummaryFilePath))
             {
                 csvReader.Delimiters = new[] { "," };
                 csvReader.TextFieldType = FieldType.Delimited;
@@ -58,14 +58,14 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
                         }
 
                         // get the row to which we will write
-                        var row = this.GetRow(sheetData, currentTargetRowPointer);
+                        var row = GetRow(sheetData, currentTargetRowPointer);
 
                         for (var i = 0; i < fields.Length; i++)
                         {
                             // we are adding 2 because we always want to start in column B for formatting reasons and need to also
                             // convert from zero based array to one based cell address
-                            var cell = this.GetCell(sheetPart, row, this.GetCellAddress((uint)(i + 2), currentTargetRowPointer));
-                            this.WriteToCell(cell, CellValues.SharedString, fields[i]);
+                            var cell = GetCell(sheetPart, row, GetCellAddress((uint)(i + 2), currentTargetRowPointer));
+                            WriteToCell(cell, CellValues.SharedString, fields[i]);
                         }
                     }
                     catch (Exception err)
