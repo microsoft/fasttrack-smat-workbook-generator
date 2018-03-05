@@ -2,11 +2,11 @@
 
 ## SMAT Workbook Generator
 
-The SMAT workbook generator is a tool that takes the output of [Microsoft SMAT](https://www.microsoft.com/en-us/download/details.aspx?id=53598) and tranforms it into a single wookbook file. Originally this was done as part of our engagements with customers within the FastTrack program, but we are releasing here as OSS as other might find it useful.
+The SMAT workbook generator is a tool that takes the output from [Microsoft SMAT](https://www.microsoft.com/en-us/download/details.aspx?id=53598) and tranforms it into a single wookbook file. Originally this was done as part of our engagements with customers within the FastTrack program, but we are releasing here as OSS as other might find it useful.
 
 ## Usage
 
-Please find the [latest release](https://github.com/Microsoft/fasttrack-smat-workbook-generator/releases) and download and unzip the file. It contains the smatwb.exe as well as supporting files and DLLS. You may need to "unblock" the files as they have been downloaded depending on your system settings.
+Please find the [latest release](https://github.com/Microsoft/fasttrack-smat-workbook-generator/releases) and download and unzip the file. It contains the smatwb.exe as well as supporting files and DLLS. You may need to "unblock" the files after downloading depending on your system settings.
 
 This tool runs on the command line and takes several parameters as described below.
 
@@ -26,8 +26,8 @@ The -s argument takes the path to the root of the SMAT output. This is the folde
 
 ### All Options
 
-|---|---|---|
 |Param|Description|Default|
+|:----:|--------------------------|---------------|
 |-s|Source folder|none, required|
 |-o|Output folder|./Workbook|
 |-t|Template Name|FastTrack|
