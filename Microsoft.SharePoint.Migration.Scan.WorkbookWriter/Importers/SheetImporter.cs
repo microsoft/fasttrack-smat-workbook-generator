@@ -130,7 +130,7 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Importers
                             else
                             {
                                 // line 3 means "fields" actually has the values from row 2 but the pointer has been advanced in LineNumber
-                                if (csvReader.LineNumber == 3)
+                                if (typeEnumMapping.Count < 1)
                                 {
                                     // we need to use the first row of data to determine as best we can the column types
                                     for (var i = 0; i < fields.Length; i++)

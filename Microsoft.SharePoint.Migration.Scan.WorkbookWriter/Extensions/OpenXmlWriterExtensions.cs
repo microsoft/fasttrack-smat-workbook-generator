@@ -20,6 +20,8 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Extensions
         {
             // default to a standard cell value
             OpenXmlElement value = new CellValue(cellValue);
+            bool testBool;
+            long testLong;
 
             // fix up some values
             switch (dataType)
@@ -40,14 +42,28 @@ namespace Microsoft.FastTrack.SMATWorkbookGenerator.Extensions
 
                 case CellValues.Number:
 
-                    // if we can't parse it as a number then this cell is an error cell
-                    // this will result in a line in the error log, but avoids errors when opening the workbook
-                    Int64.Parse(cellValue);
+                    // this is a safety check as we sometimes get bad values such as N/A in columns
+                    if (!long.TryParse(cellValue, out testLong))
+                    {
+                        // we default to writing it as a string to be safe
+                        dataType = CellValues.InlineString;
+                        value = new InlineString(new Text(cellValue));
+                    }
                     break;
 
                 case CellValues.Boolean:
 
-                    value = new CellValue(cellValue.Equals(bool.TrueString, StringComparison.OrdinalIgnoreCase) || bool.Parse(cellValue) ? "1" : "0");
+                    // this is a safety check as we sometimes get bad values such as N/A in columns
+                    if (bool.TryParse(cellValue, out testBool))
+                    {
+                        value = new CellValue(testBool ? "1" : "0");
+                    }
+                    else
+                    {
+                        // we default to writing it as a string to be safe
+                        dataType = CellValues.InlineString;
+                        value = new InlineString(new Text(cellValue));
+                    }
                     break;
             }
 
