@@ -1,5 +1,7 @@
 # Microsoft FastTrack
 
+For details on the entire [Microsoft FastTrack Open Source Initiative](https://github.com/Microsoft/fasttrack)
+
 ## SMAT Workbook Generator
 
 The SMAT workbook generator is a tool that takes the output from [Microsoft SMAT](https://www.microsoft.com/en-us/download/details.aspx?id=53598) and tranforms it into a single wookbook. Originally this was done as part of our engagements with customers within the FastTrack program, but we are releasing it here as OSS as other might find it useful.
